@@ -17,9 +17,24 @@
 // Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
 //
 //
-// -- This is a dual command --
+// -- This is a dual command -
 // Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
 //
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('LoginBE', (email, password) => {
+    cy.request({
+        method:'POST',
+        url: 'https://cypress-api.vivifyscrum-stage.com/api/v2/login', 
+        body:{
+            email:"test1235@gmail.com",
+            password:"test1235",
+            "g-recaptcha-response":""
+         }
+        
+    }).its('body').then((response) => {
+        window.localStorage.setItem('token', response.token)
+    })
+});
