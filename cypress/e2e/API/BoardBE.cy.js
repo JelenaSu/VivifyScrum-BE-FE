@@ -11,6 +11,7 @@ let boardId;
 let code;
 
 
+
 let user = {
     name: faker.word.adjective(),
     editedName: faker.vehicle.vehicle(),
