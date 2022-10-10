@@ -1,0 +1,18 @@
+{
+    "headerTitleLogin": "Log in with your existing account",
+    "headerTitle": "My Organizations",
+    "invalidEmail": "probaproba",
+    "invalidPassword": "aa",
+    "unregisteredEmail" : "probaproba987@gmail.com",
+    "unregisteredPassword": "test9898",
+    "registerPageHeader":"Account Details:",
+    "alertEmail":"The email field must be a valid email",
+    "alertPassword":"The password field must be at least 5 characters",
+    "badCredentials":"Oops! Your email/password combination is incorrect",
+    "emptyPassword":"The password field is required",
+    "emptyEmail":"The email field must be a valid email",
+    "invalidNumberUsers": "The number of users field must be an integer",
+    "blankNumberOfUsers": "The number of users field is required"
+  
+}
+

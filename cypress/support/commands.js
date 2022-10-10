@@ -29,12 +29,34 @@ Cypress.Commands.add('LoginBE', (email, password) => {
         method:'POST',
         url: 'https://cypress-api.vivifyscrum-stage.com/api/v2/login', 
         body:{
-            email:"test1235@gmail.com",
-            password:"test1235",
+            email:"test1237@gmail.com",
+            password:"test1237",
             "g-recaptcha-response":""
          }
         
     }).its('body').then((response) => {
         window.localStorage.setItem('token', response.token)
     })
+});
+
+Cypress.Commands.add('Register BE', () => {
+    
+})
+
+
+Cypress.Commands.add('Jelena', (email, password) => {
+    cy.session("Jelena", () => { 
+        cy.request({
+            method:'POST',
+            url: 'https://cypress-api.vivifyscrum-stage.com/api/v2/login', 
+            body:{
+               email:"test1235test@gmail.com",
+               password:"test1235test",
+               "g-recaptcha-response":""
+         }
+        
+    }).its('body').then((response) => {
+        window.localStorage.setItem('token', response.token)
+    })
+  });
 });
