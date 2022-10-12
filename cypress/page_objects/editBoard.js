@@ -5,8 +5,9 @@ class EditBoard {
 
     }
 
-    configureBoard(boardId) {
-        return cy.get(`[href="/boards/${boardId}/settings"]`)
+    configureBoard() {
+        return cy.get('[class="vs-c-site-logo"]').last()
+        // return cy.get(`[href="/boards/${boardId}/settings"]`)
     }
 
     get boardName() {

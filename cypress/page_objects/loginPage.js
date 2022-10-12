@@ -30,8 +30,8 @@ class LoginPage {
             method: "POST",
             url: "https://cypress-api.vivifyscrum-stage.com/api/v2/login",
             body: {
-                email: "test1236@gmail.com",
-                password: "test1236",
+                email: "test1238@gmail.com",
+                password: "test1238",
                 "g-recaptcha-response": ""
             }
 
@@ -58,6 +58,28 @@ class LoginPage {
             return intercept.response
         })
     }
+
+    beforeEachSession(name, email, password) {
+        cy.session (name, () => {
+          cy.visit("/");
+          cy.intercept(
+            "POST",
+            "https://cypress-api.vivifyscrum-stage.com/api/v2/login"
+          ).as("validLogin");
+          loginPage.login(email = Cypress.env("validLoginEmail"),password = Cypress.env("validLoginPassword"));
+        //   cy.url().should(
+        //     "contain",
+        //     "https://cypress.vivifyscrum-stage.com/my-organizations"
+        //   );
+          cy.wait("@validLogin").then((intercept) => {
+            expect(intercept.response.statusCode).to.eq(200);
+            expect(intercept.response.url).to.eq('https://cypress-api.vivifyscrum-stage.com/api/v2/login');
+            expect(intercept.request.body.email).to.eq(Cypress.env('validLoginEmail'));
+            expect(intercept.request.body.password).to.eq(Cypress.env('validLoginPassword'));
+            expect(intercept.response.statusMessage).to.eq("OK")
+          });
+        })
+      }
 
     loginInvalidFunctionNoMsg(email, password) {
         cy.visit("/");

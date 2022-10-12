@@ -1,8 +1,8 @@
 class LoginMock {
 
     post({
-        email="test1237@gmail.com",
-        password="test1237",
+        email="test1238@gmail.com",
+        password="test1238",
         grecap = "",
         url='https://cypress-api.vivifyscrum-stage.com/api/v2/login',
     })

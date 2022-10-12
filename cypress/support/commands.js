@@ -1,3 +1,5 @@
+import 'cypress-file-upload';
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -24,13 +26,15 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
+
+
 Cypress.Commands.add('LoginBE', (email, password) => {
     cy.request({
         method:'POST',
         url: 'https://cypress-api.vivifyscrum-stage.com/api/v2/login', 
         body:{
-            email:"test1237@gmail.com",
-            password:"test1237",
+            email:"test1238@gmail.com",
+            password:"test1238",
             "g-recaptcha-response":""
          }
         
@@ -50,8 +54,8 @@ Cypress.Commands.add('Jelena', (email, password) => {
             method:'POST',
             url: 'https://cypress-api.vivifyscrum-stage.com/api/v2/login', 
             body:{
-               email:"test1235test@gmail.com",
-               password:"test1235test",
+               email:"test1238@gmail.com",
+               password:"test1238",
                "g-recaptcha-response":""
          }
         

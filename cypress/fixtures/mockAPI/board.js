@@ -23,7 +23,7 @@ class CreateBoardMock {
                     type: "kanban_board",
                     configuration_board_id: "",
                     team_members_board_id: "",
-                    organization_id: "21532",
+                    organization_id: "22056",
                     avatar_crop_cords: {},
                     file: "",
                 },

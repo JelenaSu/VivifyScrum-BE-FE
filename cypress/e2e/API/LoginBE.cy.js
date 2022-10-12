@@ -23,7 +23,7 @@ describe("Login through Backend", () => {
     })
 
     it('Login mockAPI with invalid email', () => {
-        loginMock.post({email:"test1236gmail.com"}).then((response) => {
+        loginMock.post({email:"test1238gmail.com"}).then((response) => {
             expect(response.status).to.eq(401)
         })
     })

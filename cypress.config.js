@@ -12,8 +12,8 @@ module.exports = defineConfig({
     experimentalSessionAndOrigin:true,
 
     env: {
-      validLoginEmail: "test1237@gmail.com",
-      validLoginPassword: "test1237"
+      validLoginEmail: "test1238@gmail.com",
+      validLoginPassword: "test1238"
     },
     watchForFileChanges: false,
     
