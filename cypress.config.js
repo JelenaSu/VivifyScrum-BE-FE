@@ -16,6 +16,7 @@ module.exports = defineConfig({
       validLoginPassword: "test1238"
     },
     watchForFileChanges: false,
+    // failOnStatusCode: false,
     
   },
 

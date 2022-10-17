@@ -17,8 +17,8 @@ describe("Login through Backend", () => {
 
     it('Login mockAPI', () => {
         loginMock.post({}).then((response) => {
-            token = response.body.token
-            cy.writeFile('cypress/fixtures/token.json', {token: token})
+            tokenData = response.body.token
+            cy.writeFile('cypress/fixtures/token.json', {tokenData: token})
         })
     })
 

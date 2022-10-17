@@ -2,6 +2,7 @@ import { faker } from "@faker-js/faker";
 
 let boardId;
 let taskId;
+let organizationId;
 
 let user = {
   boardName: faker.commerce.product(),
@@ -15,11 +16,7 @@ let user = {
 
 class NewTask {
   get newTaskBtn() {
-    return cy
-      .get(
-        '[class="vs-add-new-task vs-c-btn vs-c-btn--themify-secondary vs-c-btn--round vs-c-btn--sm vs-c-task-card__not-selectable"]'
-      )
-      .last();
+    return cy.get('[class="vs-add-new-task vs-c-btn vs-c-btn--themify-secondary vs-c-btn--round vs-c-btn--sm vs-c-task-card__not-selectable"]').last();
   }
 
   clickNewTaskBtn() {
@@ -159,6 +156,84 @@ class NewTask {
     this.taskTypeDropdown.click()
   }
 
+  get selectOrg() {
+    return cy.get('[class="vs-c-my-organization organization-list-item"]')
+  }
+
+  clickSelectOrg() {
+    this.selectOrg.click({ multiple: true })
+  }
+
+  get configureOrgBtn() {
+    return cy.get('[data-cy="organization-configuration"]')
+  }
+
+  clickConfigureOrgBtn() {
+    this.configureOrgBtn.click()
+  }
+
+  get deleteOrgBtn() {
+    return cy.get('[class="vs-c-btn vs-c-btn--warning vs-c-btn--spaced"]')
+  }
+
+  clickDeleteOrgBtn() {
+    this.deleteOrgBtn.click()
+  }
+
+  get inputPassword() {
+    return cy.get('[type="password"]')
+  }
+
+  get yesBtn() {
+    return cy.get('[name="save-btn"]')
+  }
+
+  clickYesBtn() {
+    this.yesBtn.click()
+  }
+
+  get modalBtn() {
+    return cy.get('.vs-c-modal--features-button > .vs-c-btn')
+  }
+
+  clickModalBtn() {
+    this.modalBtn.click()
+  }
+
+  deleteOrg(organizationId) {
+    this.clickSelectOrg(organizationId);
+    this.clickModalBtn();
+    this.clickConfigureOrgBtn();
+    this.clickDeleteOrgBtn();
+    this.inputPassword.type(Cypress.env('validLoginPassword'))
+    this.clickYesBtn();
+}
+
+// deleteOrganization(organizationId){
+//   cy.visit(`organizations/${organizationId}/boards`)
+//   cy.get("[class='vs-c-site-logo']").last().click({force:true})
+//   cy.get("[class='vs-c-btn vs-c-btn--warning vs-c-btn--spaced']").click({force:true})
+//   cy.get("[type='password']").type(Cypress.env("validPassword"))
+//   cy.get("[name='save-btn']").click({force:true})
+//   cy.get(".vs-c-modal--features-button > .vs-c-btn").click();
+// }
+
+
+
+  deleteOrgFunction() {
+    cy.visit("https://cypress.vivifyscrum-stage.com/my-organizations");
+    cy.url().should("contain", "/my-organization");
+    cy.intercept(
+      "DELETE",
+      `https://cypress-api.vivifyscrum-stage.com/api/v2/organizations/${organizationId}`
+    ).as("deleteBoard");
+    newTask.deleteOrg(organizationId);
+    return cy.wait("@deleteBoard").then((intercept) => {
+      expect(intercept.response.statusCode).to.eq(200);
+    });
+  }
+  
+
   newTaskFunction(title, description, comment) {
     cy.intercept(
       "POST",
@@ -172,9 +247,7 @@ class NewTask {
     this.clickEditDescriptionField();
     this.writeDescriptionField.type(description);
     this.clickSaveDescriptionBtn();
-    cy.wait(3000);
     this.uploadFilesBtn;
-    cy.wait(2000);
     this.clickAddLabelBtn();
     this.clickChooseLabel();
     this.writeCommentInput.type(comment);

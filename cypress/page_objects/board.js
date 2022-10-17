@@ -3,8 +3,13 @@ import { editBoard } from "./editBoard";
 
 class Board {
   get addNewBoard() {
-    return cy.get('[class="vs-c-boards-item__header--add-new "]').last()
-    // return cy.get('[class="vs-c-media__object"]');
+    return cy.get('[class="vs-c-my-organization__list vs-c-my-organization__boards"]').last()
+    // return cy.get('[class="vs-c-boards-item__header--add-new "]').last()
+    // return cy.get('[class="vs-c-media__object"]').last();
+  }
+
+  get addNewBoardSc() {
+    return cy.get('[class="vs-c-media__object"]').last()
   }
 
   get enterTitle() {
@@ -53,7 +58,9 @@ class Board {
   }
 
   get createBoardNewOrg() {
-    return cy.get(".vs-c-my-organization__board");
+       return cy.get('.vs-c-media')
+    // return cy.get('[class="vs-c-my-organization__list vs-c-my-organization__boards"]').last();
+    // return cy.get(".vs-c-my-organization__board");
     // return cy.get('.vs-c-media__object > .vs-c-img--avatar > span')
   }
   get newOrganizationBtn() {
@@ -104,9 +111,28 @@ class Board {
   }
 
   createBoard(name) {
-    this.clickModalBtn();
+    // this.clickModalBtn();
     // this.newOrgLogoSign.click({ force: true });
     this.clickAddNewBoard({force: true});
+    this.clickModalBtn();
+    this.addNewBoardSc.click()
+    // this.clickAddNewBoard();
+    this.enterTitle.should("be.visible").type(name);
+    this.clickNextBtnFirst();
+    this.clickKanbanCheck();
+    this.clickNextBtnSecond();
+    this.clickNextBtnThird();
+    this.clickNextBtnFourth();
+    this.clickFinishBtn();
+  }
+
+  createBoardAfterOrg(name) {
+    this.clickModalBtn();
+    // this.newOrgLogoSign.click({ force: true });
+    this.createBoardNewOrg.click();
+    // this.clickModalBtn();
+    // this.addNewBoardSc.click()
+    // this.clickAddNewBoard();
     this.enterTitle.should("be.visible").type(name);
     this.clickNextBtnFirst();
     this.clickKanbanCheck();
@@ -117,8 +143,7 @@ class Board {
   }
 
   createBoardBE(token, boardName) {
-    return cy
-      .request({
+    return cy.request({
         method: "POST",
         url: "https://cypress-api.vivifyscrum-stage.com/api/v2/boards",
         headers: {

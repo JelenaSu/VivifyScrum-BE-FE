@@ -1,5 +1,5 @@
 import 'cypress-file-upload';
-
+import '@4tw/cypress-drag-drop';
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -43,12 +43,7 @@ Cypress.Commands.add('LoginBE', (email, password) => {
     })
 });
 
-Cypress.Commands.add('Register BE', () => {
-    
-})
-
-
-Cypress.Commands.add('Jelena', (email, password) => {
+Cypress.Commands.add('Jelena', () => {
     cy.session("Jelena", () => { 
         cy.request({
             method:'POST',
@@ -60,6 +55,8 @@ Cypress.Commands.add('Jelena', (email, password) => {
          }
         
     }).its('body').then((response) => {
+        // token = response.body.token
+        cy.writeFile("cypress/fixtures/tokenData.json", { token: response })
         window.localStorage.setItem('token', response.token)
     })
   });

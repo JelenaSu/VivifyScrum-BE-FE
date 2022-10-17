@@ -20,6 +20,7 @@ class NewOrganization {
     }
 
     get newOrganizationLogoSign() {
+        // return cy.get('[class="vs-c-my-organization__avatar"]')
         return cy.get('[class="vs-c-site-logo vs-u-cursor--pointer"]')
     }
 
@@ -37,6 +38,7 @@ class NewOrganization {
 
     
     createNewOrganizationFunction(name) {
+        cy.visit("https://cypress.vivifyscrum-stage.com/my-organizations");
         this.newOrganizationLogoSign.click()
         this.newOrganizationBtn.scrollIntoView().click()
         this.newOrganizationNameInput.type(name)
@@ -73,6 +75,16 @@ class NewOrganization {
         })
     }
 
+    NewOrgCreateBoard(name) {
+        cy.intercept("POST", "https://cypress-api.vivifyscrum-stage.com/api/v2/boards").as("createBoard")
+        board.createBoardAfterOrg(name);
+        return cy.wait('@createBoard').then((intercept) => {
+            expect(intercept.response.statusCode).to.eq(201)
+            expect(intercept.response.statusMessage).to.eq("Created")
+            return intercept.response 
+        })
+    }
+
     createNewOrganizationIDfunction(name) {
         cy.intercept("POST", "https://cypress-api.vivifyscrum-stage.com/api/v2/organizations").as("createOrgID")
         newOrganization.createNewOrganizationFunction(name);
@@ -84,11 +96,27 @@ class NewOrganization {
     
     )} 
 
-    
+    createNewOrganizationBE(token, name) {
+        return cy.request({
+        method: "POST",
+            url: "https://cypress-api.vivifyscrum-stage.com/api/v2/organizations",
+            body: {
+                name: name,
+                avatar_crop_cords: {},
+                file: ""
+            },
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
 
-    
-}
-
+        }).then((response) => {
+            // window.localStorage.setItem("token", response.body.token)
+            window.localStorage.setItem('organizationId', response.body.id);
+            // window.localStorage.setItem('user', JSON.stringify(response.body.user));
+            return response;
+        })
+      }
+    }
 
 
 export const newOrganization = new NewOrganization();
